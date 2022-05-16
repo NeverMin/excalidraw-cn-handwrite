@@ -24,7 +24,7 @@ jobs:
           yarn --frozen-lockfile
           yarn build:app
         env:
-          CI: true
+          CI: false
       #          npm install
       #          npm run build --if-present
       #          npm run test --if-present
