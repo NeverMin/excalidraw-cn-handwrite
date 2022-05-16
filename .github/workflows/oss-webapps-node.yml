@@ -21,13 +21,11 @@ jobs:
 
       - name: npm install, build, and test
         run: |
+          mkdir -p /home/runner/.npm
           yarn --frozen-lockfile
           yarn build:app
         env:
           CI: false
-      #          npm install
-      #          npm run build --if-present
-      #          npm run test --if-present
 
       - name: upload files to OSS
         uses: nevermin/aliyun-oss-website-action@v1
