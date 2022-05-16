@@ -5,32 +5,32 @@ on:
   workflow_dispatch:
 
 env:
-  NODE_VERSION: '14.x'                # set this to the node version to use
+  NODE_VERSION: "14.x" # set this to the node version to use
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ env.NODE_VERSION }}
-        cache: 'npm'
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
 
-    - name: npm install, build, and test
-      run: |
-        npm install
-        npm run build:local
+      - name: npm install, build, and test
+        run: |
+          npm install
+          npm run build --if-present
+          npm run test --if-present
 
-    - name: upload files to OSS
-      uses: nevermin/aliyun-oss-website-action@v1
-      with:
-        accessKeyId: ${{ secrets.ACCESS_KEY_ID }}
-        accessKeySecret: ${{ secrets.ACCESS_KEY_SECRET }}
-        bucket: ${{ secrets.BUCKET }}
-        # use your own endpoint
-        endpoint: oss-cn-shanghai.aliyuncs.com
-        folder: ./build/
-        
+      - name: upload files to OSS
+        uses: nevermin/aliyun-oss-website-action@v1
+        with:
+          accessKeyId: ${{ secrets.ACCESS_KEY_ID }}
+          accessKeySecret: ${{ secrets.ACCESS_KEY_SECRET }}
+          bucket: ${{ secrets.BUCKET }}
+          # use your own endpoint
+          endpoint: oss-cn-shanghai.aliyuncs.com
+          folder: ./build/
